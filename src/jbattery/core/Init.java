@@ -48,7 +48,7 @@ public class Init {
                     }
                  }
                 
-                 if(acpiVal.contains("40")){
+                 if(acpiVal.contains("11")){
                      if(val == 0){
                          Notification.show(Notification.BAT_DOWN, "Battery status", 
                              "URGENT The battery is down, please conect to adapter AC level: "+acpiVal+"%",
@@ -57,7 +57,7 @@ public class Init {
                      }
                  }
                  
-                 if(acpiVal.contains("34")){
+                 if(acpiVal.contains("100")){
                      if(val==0){
                         Notification.show(Notification.BAT_FULL,"Battery status", 
                                 "The Battery is full charged, please disconect, "
