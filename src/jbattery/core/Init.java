@@ -10,76 +10,87 @@ import java.util.TimerTask;
 import nicon.notify.core.Notification;
 
 /**
- *
+ * Inicializa la aplicacion, se encarga de validar los diferentes estados e
+ * información que arroja la batería
+ * 
  * @author frederick
+ * @version 2.0
  */
+
 public class Init {
-    
+
     private Jacpi acpi;
     private Timer timer;
     private TimerTask acpiTask;
     private TimerTask valTask;
     private TimerTask memTask;
     private int val;
-    private String acpiVal;    
-    Runtime run;    
-    
-    public Init(){  
+    private String acpiVal;
+    Runtime run;
+
+    public Init(){
         System.out.println("initializing init ...\n");
         acpi = new Jacpi();
-        timer = new Timer(); 
+        timer = new Timer();
         validator();
         clearMemory();
     }
-    
+
     public void init(){
-        System.out.println("setting init interface\n");               
+        System.out.println("setting init interface\n");
         acpiTask = new TimerTask(){
             @Override
             public void run() {
                 acpiVal = acpi.getPercentBattery();
-                System.out.println("getting de batery status ...");                
+                System.out.println("getting de batery status ...\nthe battery level is: "+acpiVal
+                +"\ntime reimaining: "+acpi.getTimeRemaining());                
                 if(acpiVal.contains("50")){
                     if(val == 0){
-                        Notification.show(Notification.BAT_MED, "Battery status", 
-                                          "Your battery is downloading,level is:"+acpiVal+"%",
+                        Notification.show(Notification.BAT_MED, "Battery status",
+                                          "Your battery is downloading,level is:"
+                                          +acpiVal+"\n time remaining: "+acpi.getTimeRemaining(),
                                           Notification.NICON_DARK_THEME,false);
                         val =1;
                     }
                  }
-                
+
                  if(acpiVal.contains("11")){
                      if(val == 0){
-                         Notification.show(Notification.BAT_DOWN, "Battery status", 
-                             "URGENT The battery is down, please conect to adapter AC level: "+acpiVal+"%",
+                         Notification.show(Notification.BAT_DOWN, "Battery status",
+                             "URGENT The battery is down, please conect to adapter AC level: "
+                             +acpiVal+"\ntime remaning: "+acpi.getTimeRemaining(),
                              Notification.NICON_DARK_THEME);
                          val=1;
                      }
                  }
-                 
+
                  if(acpiVal.contains("100")){
                      if(val==0){
-                        Notification.show(Notification.BAT_FULL,"Battery status", 
+                        Notification.show(Notification.BAT_FULL,"Battery status",
                                 "The Battery is full charged, please disconect, "
-                               + "level:"+acpiVal+"%",Notification.NICON_DARK_THEME);
+                               + "level:"+acpiVal+"\ntime remaining: "+acpi.getTimeRemaining()
+                                ,Notification.NICON_DARK_THEME);
                         val = 1;
                      }
                  }
-            }            
-        }; 
+            }
+        };
         timer.schedule(acpiTask, 10,30000);
     }
-    
+
+    /**
+    Este metodo se encarga de validar la ejecucion de JACPI.
+    */
     private void validator(){
         valTask = new TimerTask(){
             @Override
-            public void run() {                
+            public void run() {
                 val = 0;
-            }            
+            }
         };
         timer.schedule(valTask, 1,600000);
     }
-    
+
     private void clearMemory(){
         try{
             memTask = new TimerTask() {
@@ -89,12 +100,12 @@ public class Init {
                     System.runFinalization();
                     System.gc();
                     System.out.println("Garbage Collector finalized ...");
-                }            
+                }
             };
             timer.schedule(memTask, 1,150000);
         }catch(Exception e){
             System.err.println(e);
         }
     }
-    
+
 }
