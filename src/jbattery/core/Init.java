@@ -25,7 +25,7 @@ public class Init {
     private TimerTask valTask;
     private TimerTask memTask;
     private int val;
-    private String acpiVal;
+    private int acpiVal;
     Runtime run;
 
     public Init(){
@@ -44,7 +44,7 @@ public class Init {
                 acpiVal = acpi.getPercentBattery();
                 System.out.println("getting de batery status ...\nthe battery level is: "+acpiVal
                 +"\ntime reimaining: "+acpi.getTimeRemaining());                
-                if(acpiVal.contains("50")){
+                if(acpiVal ==50 ){
                     if(val == 0){
                         Notification.show(Notification.BAT_MED, "Battery status",
                                           "Your battery is downloading,level is:"
@@ -54,7 +54,7 @@ public class Init {
                     }
                  }
 
-                 if(acpiVal.contains("11")){
+                 if(acpiVal < 10){
                      if(val == 0){
                          Notification.show(Notification.BAT_DOWN, "Battery status",
                              "URGENT The battery is down, please conect to adapter AC level: "
@@ -64,7 +64,7 @@ public class Init {
                      }
                  }
 
-                 if(acpiVal.contains("100")){
+                 if(acpiVal == 100){
                      if(val==0){
                         Notification.show(Notification.BAT_FULL,"Battery status",
                                 "The Battery is full charged, please disconect, "
