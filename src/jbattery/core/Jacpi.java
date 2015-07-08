@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import nicon.notify.core.Notification;
 
 /**
@@ -23,8 +22,8 @@ public class Jacpi {
     private BufferedReader br;
     private String bateryData;
     private Process proc;
-    private int indexOf;
     private String [] acData;
+    private int indexOf;
 
     public Jacpi(){
         System.out.println("initializing JACPI ...");
@@ -43,6 +42,7 @@ public class Jacpi {
                 if(os.equals("Linux")){
                     try{
                       proc = Runtime.getRuntime().exec("acpi");
+                      proc.destroy();
                     }catch(IOException er){
                         Notification.show("JBattery ERROR",er.getMessage()+"JBattery exit now.", Notification.ERROR_MESSAGE, true);
                     }
@@ -57,14 +57,15 @@ public class Jacpi {
      */
     private String[] getStatusACPI(){
         try{
+            proc = Runtime.getRuntime().exec("acpi");
             in = proc.getInputStream();
             br = new BufferedReader (new InputStreamReader (in));
             bateryData = br.readLine();
             in.close();
             br.close();
             proc.destroy();
-        }catch(Exception e){
-            System.err.println(e.fillInStackTrace());
+        }catch(IOException e){
+            e.printStackTrace();
         }
         return bateryData.split(",");
     }
@@ -77,10 +78,23 @@ public class Jacpi {
      *
      * @return String nivel
      */
-    public String getPercentBattery(){
+    public int getPercentBattery(){
         acData = getStatusACPI();
         nivel = acData[1];
-        System.out.println("Nivel is: "+nivel);
+        indexOf = nivel.indexOf('%');
+        System.out.println("The percent of batery is: "+nivel.substring(indexOf-3, indexOf)+"%");
+        nivel = nivel.substring(indexOf-3, indexOf);
+        return Integer.parseInt(nivel);
+    }
+    
+    /**
+     * Retorna el tiempo restante para descarga la bateria.
+     * @return nivel
+     */
+    public String getTimeRemaining(){
+        if(acData != null){
+          nivel = acData[2].substring(0, 9);
+        }
         return nivel;
     }
     
