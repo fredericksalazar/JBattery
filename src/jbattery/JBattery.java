@@ -1,8 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) NiconSystemCO 2015
+ * License: GPLv3
+ *
+ * Authors:
+ * Frederick Adolfo Salazar Sanchez <fredefass01@gmail.com>
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as
+ *   published by the Free Software Foundation; either version 3,
+ *   or (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details
+ *
+ *   You should have received a copy of the GNU General Public
+ *   License along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package jbattery;
 
 import java.util.logging.Level;
@@ -14,16 +32,15 @@ import jbattery.core.Init;
 
 /**
  *
- * @author frederick
+ * @author Frederick Adolfo Salazar Sanchez
+ * @version 1.5
  */
+
 public class JBattery {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         try {
-            System.out.println("Starting JBattery 1.0 ...");
+            System.out.println("Starting JBattery 1.8 ...");
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
             Init in = new Init();
             in.init();
@@ -31,5 +48,5 @@ public class JBattery {
             Logger.getLogger(JBattery.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
