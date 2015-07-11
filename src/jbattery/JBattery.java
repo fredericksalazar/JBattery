@@ -42,7 +42,7 @@ public class JBattery {
 
     public static void main(String[] args) {
 
-        //Inicializa JBattery
+        //Inicializa JBattery app
         if(args[0].equals("-s")||args[0].equals("-S")){
             try {
                 System.out.println("Starting JBattery 1.8 ...");
@@ -62,11 +62,16 @@ public class JBattery {
 
         //Muestra por consola un manual de ayuda de JBattery
         if(args[0].equals("-h")){
-            System.out.println("\n\nWelcome to JBattery Manual\n\n" +
-                    "JBattery is a java app for GNU / Linux that allows monitoringthe different events battery of a device,\n" +
-                    "reports the different energy levels and evaluates the state of health of the battery of your device.\n" +
+            System.out.println("\n\n////////////////////////////////////////////////////////////////////////////////////\n\n" +
+                    "Welcome to JBattery Manual\n\n" +
+                    "JBattery is a java app for GNU/Linux that allows monitoring the different \n" +
+                    "events battery of a device, report the different energy levels and evaluates\n" +
+                    "the state of health of the battery of your device.\n" +
                     "\n" +
-                    "Below is the list of parameters to use: ");
+                    "Below is the list of parameters to use: \n\n" +
+                    "-s - - - - - - - - - - start a JBattery app (UI)\n" +
+                    "-v - - - - - - - - - - show the version app in a desktop notification\n" +
+                    "-h - - - - - - - - - - show a help information of JBattery\n\n\n");
         }
     }
 
