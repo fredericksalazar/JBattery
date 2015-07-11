@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+import jbattery.core.Jacpi;
 import nicon.notify.core.Notification;
 
 import jbattery.core.Init;
@@ -45,7 +47,7 @@ public class JBattery {
         //Inicializa JBattery app
         if(args[0].equals("-s")||args[0].equals("-S")){
             try {
-                System.out.println("Starting JBattery 1.8 ...");
+                System.out.println("Starting JBattery 1.9 ...");
                 UIManager.setLookAndFeel(new NimbusLookAndFeel());
                 Init in = new Init();
                 in.init();
@@ -54,10 +56,22 @@ public class JBattery {
             }
         }
 
+        //evalua el actual estado de la batería e informa del resultado (dead, good, medium)
+        if(args[0].equals("-c")) {
+            try {
+                System.out.println("\nStarting a JBattery CHEKING_MODE ...\n");
+                Jacpi CHK_STATUS_BAT = new Jacpi();
+                CHK_STATUS_BAT.checkBattery();
+            } catch (Exception e) {
+
+            }
+        }
+
         //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
         if(args[0].equals("-v")||args[0].equals("-V")){
             Notification.show(Notification.DISK_ICON,"JBattery information:","JBattery version: 1.9\n" +
-                    "NiconNotifyOSD Version: 1.9.5");
+                    "NiconNotifyOSD Version: 1.9.5\n" +
+                    "build: 10072015_dev");
         }
 
         //Muestra por consola un manual de ayuda de JBattery
