@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import nicon.notify.core.Notification;
+
 import jbattery.core.Init;
 
 /**
@@ -39,13 +41,32 @@ import jbattery.core.Init;
 public class JBattery {
 
     public static void main(String[] args) {
-        try {
-            System.out.println("Starting JBattery 1.8 ...");
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-            Init in = new Init();
-            in.init();
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(JBattery.class.getName()).log(Level.SEVERE, null, ex);
+
+        //Inicializa JBattery
+        if(args[0].equals("-s")||args[0].equals("-S")){
+            try {
+                System.out.println("Starting JBattery 1.8 ...");
+                UIManager.setLookAndFeel(new NimbusLookAndFeel());
+                Init in = new Init();
+                in.init();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JBattery.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
+        if(args[0].equals("-v")||args[0].equals("-V")){
+            Notification.show(Notification.DISK_ICON,"JBattery information:","JBattery version: 1.9\n" +
+                    "NiconNotifyOSD Version: 1.9.5");
+        }
+
+        //Muestra por consola un manual de ayuda de JBattery
+        if(args[0].equals("-h")){
+            System.out.println("\n\nWelcome to JBattery Manual\n\n" +
+                    "JBattery is a java app for GNU / Linux that allows monitoringthe different events battery of a device,\n" +
+                    "reports the different energy levels and evaluates the state of health of the battery of your device.\n" +
+                    "\n" +
+                    "Below is the list of parameters to use: ");
         }
     }
 
