@@ -78,7 +78,7 @@ public class Init {
                          Notification.show(Notification.BAT_DOWN, "Battery status",
                              "URGENT The battery is down, please conect to adapter AC\n"
                              +"Battery Level is"+acpiVal+"%\ntime remaning: "+acpi.getTimeRemaining(),
-                             Notification.NICON_DARK_THEME);
+                             Notification.NICON_DARK_THEME,true);
                          val=1;
                      }
                  }
@@ -98,7 +98,7 @@ public class Init {
                      if(val==0){
                         Notification.show(Notification.BAT_FULL,"Battery status",
                                 "The Battery is full charged, please disconect\n"
-                               +"Battery Level is: "+acpiVal+"%",Notification.NICON_DARK_THEME);
+                               +"Battery Level is: "+acpiVal+"%",Notification.NICON_DARK_THEME,true);
                         val = 1;
                      }
                  }
