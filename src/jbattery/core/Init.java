@@ -43,7 +43,7 @@ public class Init {
     private TimerTask valTask;
     private TimerTask memTask;
     private int val;
-    private int acpiVal;
+    private int bat_Level;
     Runtime run;
 
     public Init(){
@@ -60,51 +60,59 @@ public class Init {
         acpiTask = new TimerTask(){
             @Override
             public void run() {
+                bat_Level = acpi.getPercentBattery();
+                printLine();
 
-                acpiVal = acpi.getPercentBattery();
-
-                //validamos que la bateria no este al 100% para evitar un ArrayIndexOfBoundsException pues al momento
-                //de ejecutar el comando ACPI este no retornará un String[2] sino un String[1]
-
-                if(acpiVal < 100){
-                    System.out.println("\ngetting the batery status ...\nthe battery level is: " + acpiVal + "%\n"
-                            + "time remaining is: " + acpi.getTimeRemaining());
-                }else {
-                    System.out.println("The Battery is full charged, please disconect the AC power conector...");
-                }
-
-                if(acpiVal < 10){
+                //Si bat_Level es menor a 10% indica que la bateria esta en un punto crítico y que debe conectarse a una
+                //fuente de energía.
+                if(bat_Level < 10){
                      if(val == 0){
                          Notification.show(Notification.BAT_DOWN, "Battery status",
                              "URGENT The battery is down, please conect to adapter AC\n"
-                             +"Battery Level is"+acpiVal+"%\ntime remaning: "+acpi.getTimeRemaining(),
+                             +"Battery Level is"+ bat_Level +"%\ntime remaning: "+acpi.getTimeRemaining(),
                              Notification.NICON_DARK_THEME,true);
                          val=1;
                      }
-                 }
+                }
 
-                if(acpiVal == 50 ){
+                //Si bat_Level esta en 50% indica que la batería ha llegado a la mitady que pronto iniciará su proceso
+                //de descarga
+                if(bat_Level == 50 ){
                     if(val == 0){
                         Notification.show(Notification.BAT_MED, "Battery status",
                                           "Your battery is downloading\n"
-                                          + "Battery level is:"+acpiVal+"%\n"
+                                          + "Battery level is:"+ bat_Level +"%\n"
                                           + "time remaining: "+acpi.getTimeRemaining(),
                                           Notification.NICON_DARK_THEME,false);
                         val =1;
                     }
-                 }
+                }
 
-                 if(acpiVal == 100){
+                //Si bat_Level llega al 100& se informa que la batería se ha recargado exitosamente y que debe ser
+                //desconectada para evitar daños en la misma
+                if(bat_Level == 100){
                      if(val==0){
                         Notification.show(Notification.BAT_FULL,"Battery status",
                                 "The Battery is full charged, please disconect\n"
-                               +"Battery Level is: "+acpiVal+"%",Notification.NICON_DARK_THEME,true);
+                               +"Battery Level is: "+ bat_Level +"%",Notification.NICON_DARK_THEME,true);
                         val = 1;
                      }
-                 }
+                }
             }
         };
-        timer.schedule(acpiTask, 10,30000);
+        timer.schedule(acpiTask, 10, 30000);
+    }
+
+    /**
+     * Este metodo se encarga de imprimir en consola los valores de batteryLeve y timeRemaining
+     */
+    private void printLine(){
+        if(bat_Level < 100){
+            System.out.println("\ngetting the batery status ...\nthe battery level is: " + bat_Level + "%\n"
+                    + "time remaining is: " + acpi.getTimeRemaining());
+        }else {
+            System.out.println("The Battery is full charged, please disconect the AC power conector...");
+        }
     }
 
     /**
@@ -120,6 +128,10 @@ public class Init {
         timer.schedule(valTask, 1,600000);
     }
 
+    /**
+     * Este metodo se encarga de hacer una dump de memoria haciendo una invocacion al garbage collector de la JVM
+     * es llamado cada 15 minutos. (Se espera aumentar mas el tiempo para hacer la llamada)
+     */
     private void clearMemory(){
         try{
             memTask = new TimerTask() {
@@ -131,7 +143,7 @@ public class Init {
                     System.out.println("Garbage Collector finalized ...");
                 }
             };
-            timer.schedule(memTask, 1,150000);
+            timer.schedule(memTask, 1,300000);
         }catch(Exception e){
             System.err.println(e);
         }
