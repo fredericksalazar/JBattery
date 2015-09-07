@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import nicon.notify.core.Notification;
 
 /**
@@ -82,10 +81,13 @@ public class Jacpi {
                       proc = Runtime.getRuntime().exec("acpi");
                       proc.destroy();
                     }catch(IOException er){
-                        Notification.show("JBattery ERROR",er.getMessage()+"JBattery exit now.", Notification.ERROR_MESSAGE, true);
+                        Notification.show("JBattery ERROR",er.getMessage()+"JBattery exit now.",
+                                Notification.NICON_DARK_THEME, Notification.ERROR_MESSAGE, true);
                     }
                 }else{
-                   Notification.show("JBattery ERROR", "JBattery is developed only for GNU/Linux OS, please verify and execute, JBattery exit now.", Notification.ERROR_MESSAGE, Notification.NICON_DARK_THEME, true);
+                   Notification.show("JBattery ERROR", "JBattery is developed only for GNU/Linux OS,"
+                           + " please verify and execute, JBattery exit now.", Notification.NICON_DARK_THEME,
+                           Notification.ERROR_MESSAGE, true);
                 }
     }
 
@@ -160,19 +162,20 @@ public class Jacpi {
                    System.out.println("The Battery capacity is: "+capBat);
 
                         if(capBat < 50){
-                            Notification.show(Notification.PLUGIN_ICON, "JBattery Status Life",
+                            Notification.show("JBattery Status Life",
                                             "The battery capacity of your Device is: "+capBat+"%\n"
-                                            + "Your Battery is BAD");
+                                            + "Your Battery is BAD",Notification.NICON_DARK_THEME,
+                                            Notification.PLUGIN_ICON);
                         }
                         if(capBat>50 && capBat < 70){
-                            Notification.show(Notification.DISK_ICON, "JBattery Status Life",
+                            Notification.show("JBattery Status Life",
                                               "The Batter capacity of your Device is: "+capBat+"%\n"
-                                            + "your battery has started to deteriorate");
+                                            + "your battery has started to deteriorate",Notification.NICON_DARK_THEME);
                         }
                         if(capBat > 95){
-                           Notification.show(Notification.DISK_ICON, "JBattery Status Life",
+                           Notification.show("JBattery Status Life",
                                               "The Batter capacity of your Device is: "+capBat+"%\n"
-                                            + "your battery is VERY GOOD");
+                                            + "your battery is VERY GOOD",Notification.NICON_DARK_THEME);
                         }
                 }catch(NumberFormatException nme){
                     System.err.println(nme);

@@ -63,15 +63,16 @@ public class JBattery {
                 Jacpi CHK_STATUS_BAT = new Jacpi();
                 CHK_STATUS_BAT.checkBattery();
             } catch (Exception e) {
-
+                    
             }
         }
 
         //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
         if(args[0].equals("-v")||args[0].equals("-V")){
-            Notification.show(Notification.DISK_ICON,"JBattery information:","JBattery version: 1.9\n" +
-                    "NiconNotifyOSD Version: 1.9.5\n" +
-                    "build: 10072015_dev");
+            Notification.show("JBattery", "JBattery version: 1.9.5\n"
+                    + "NiconNotifyOSD version: 1.9.8\n"
+                    + "Developed by: NiconSystemCO 2015", 
+                    Notification.NICON_DARK_THEME, Notification.DISK_ICON);
         }
 
         //Muestra por consola un manual de ayuda de JBattery

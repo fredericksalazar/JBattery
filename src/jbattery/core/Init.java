@@ -67,10 +67,9 @@ public class Init {
                 //fuente de energía.
                 if(bat_Level < 10){
                      if(val == 0){
-                         Notification.show(Notification.BAT_DOWN, "Battery status",
-                             "URGENT The battery is down, please conect to adapter AC\n"
-                             +"Battery Level is"+ bat_Level +"%\ntime remaning: "+acpi.getTimeRemaining(),
-                             Notification.NICON_DARK_THEME,true);
+                         Notification.show("Battery Status","URGENT The battery is down, please conect to adapter AC\n" +
+"                                Battery Level is"+ bat_Level +"\ntime remaning:"+acpi.getTimeRemaining(),
+                                 Notification.NICON_DARK_THEME, Notification.BAT_DOWN, true, -1);
                          val=1;
                      }
                 }
@@ -79,11 +78,10 @@ public class Init {
                 //de descarga
                 if(bat_Level == 50 ){
                     if(val == 0){
-                        Notification.show(Notification.BAT_MED, "Battery status",
-                                          "Your battery is downloading\n"
+                        Notification.show("Battery status","Your battery is downloading\n"
                                           + "Battery level is:"+ bat_Level +"%\n"
                                           + "time remaining: "+acpi.getTimeRemaining(),
-                                          Notification.NICON_DARK_THEME,false);
+                                          Notification.NICON_DARK_THEME,Notification.BAT_MED,true);
                         val =1;
                     }
                 }
@@ -92,9 +90,9 @@ public class Init {
                 //desconectada para evitar daños en la misma
                 if(bat_Level == 100){
                      if(val==0){
-                        Notification.show(Notification.BAT_FULL,"Battery status",
-                                "The Battery is full charged, please disconect\n"
-                               +"Battery Level is: "+ bat_Level +"%",Notification.NICON_DARK_THEME,true);
+                        Notification.show("Battery status","The Battery is full charged, please disconect\n"
+                               +"Battery Level is: "+ bat_Level +"%",Notification.NICON_DARK_THEME,
+                               Notification.BAT_FULL);
                         val = 1;
                      }
                 }
