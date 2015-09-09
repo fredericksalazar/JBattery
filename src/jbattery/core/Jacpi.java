@@ -81,13 +81,17 @@ public class Jacpi {
                       proc = Runtime.getRuntime().exec("acpi");
                       proc.destroy();
                     }catch(IOException er){
-                        Notification.show("JBattery ERROR",er.getMessage()+"JBattery exit now.",
-                                Notification.NICON_DARK_THEME, Notification.ERROR_MESSAGE, true);
+                        int inp = Notification.showConfirm("JBattery ERROR",er.getMessage(),
+                                Notification.NICON_DARK_THEME,true,Notification.ERROR_MESSAGE);
+                        if(inp >= 0)
+                            System.exit(0);
                     }
                 }else{
-                   Notification.show("JBattery ERROR", "JBattery is developed only for GNU/Linux OS,"
-                           + " please verify and execute, JBattery exit now.", Notification.NICON_DARK_THEME,
-                           Notification.ERROR_MESSAGE, true);
+                    int inp = Notification.showConfirm("JBattery ERROR", "JBattery is developed only for GNU/Linux OS,"
+                        + " please verify and execute, JBattery exit now.", Notification.NICON_DARK_THEME,
+                        Notification.ERROR_MESSAGE, true);
+                    if( inp >= 0)
+                        System.exit(0);
                 }
     }
 
@@ -162,20 +166,23 @@ public class Jacpi {
                    System.out.println("The Battery capacity is: "+capBat);
 
                         if(capBat < 50){
-                            Notification.show("JBattery Status Life",
-                                            "The battery capacity of your Device is: "+capBat+"%\n"
-                                            + "Your Battery is BAD",Notification.NICON_DARK_THEME,
-                                            Notification.PLUGIN_ICON);
+                            Notification.showConfirm("JBattery CHEK_MODE", "Battery level of Device is:"+capBat+"%\n"
+                                    + "Your Battery is BAD, please contact with your hadware provider", 
+                                    Notification.NICON_DARK_THEME, true, 
+                                    Notification.ERROR_MESSAGE,-1);
                         }
                         if(capBat>50 && capBat < 70){
-                            Notification.show("JBattery Status Life",
-                                              "The Batter capacity of your Device is: "+capBat+"%\n"
-                                            + "your battery has started to deteriorate",Notification.NICON_DARK_THEME);
+                            Notification.showConfirm("JBattery CHEK_MODE",
+                                    "The Batter capacity of your Device is: "+capBat+"%\n"
+                                    + "your battery has started to deteriorate",
+                                    Notification.NICON_DARK_THEME,true,
+                                    Notification.WARNING_MESSAGE);
                         }
                         if(capBat > 95){
-                           Notification.show("JBattery Status Life",
-                                              "The Batter capacity of your Device is: "+capBat+"%\n"
-                                            + "your battery is VERY GOOD",Notification.NICON_DARK_THEME);
+                           Notification.showConfirm("JBattery CHEK_MODE",
+                                  "The Batter capacity of your Device is: "+capBat+"%\n"
+                                + "your battery is VERY GOOD",
+                                  Notification.NICON_DARK_THEME,Notification.OK_MESSAGE);
                         }
                 }catch(NumberFormatException nme){
                     System.err.println(nme);
@@ -186,5 +193,4 @@ public class Jacpi {
             System.err.println(e);
         }
     }
-
 }
