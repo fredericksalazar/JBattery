@@ -97,7 +97,7 @@ public class JBattery {
             
             //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
             if(args[0].equals("-v")||args[0].equals("-V")){
-                Notification.show("JBattery", "JBattery version: 1.9.5\n"
+                Notification.show("JBattery", "JBattery version: 2.0\n"
                         + "NiconNotifyOSD version: 1.9.8\n"
                         + "Developed by: NiconSystemCO 2015",
                         Notification.NICON_DARK_THEME, Notification.NICON_SYSTEM);
