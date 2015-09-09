@@ -67,9 +67,9 @@ public class Init {
                 //fuente de energía.
                 if(bat_Level < 10){
                      if(val == 0){
-                         Notification.show("Battery Status","URGENT The battery is down, please conect to adapter AC\n" +
-"                                Battery Level is"+ bat_Level +"\ntime remaning:"+acpi.getTimeRemaining(),
-                                 Notification.NICON_DARK_THEME, Notification.BAT_DOWN, true, -1);
+                         Notification.show("URGENT Battery Status","Battery is down, please conect to adapter AC"
+                                 + "Battery Level is"+ bat_Level +"%\ntime remaning:"+acpi.getTimeRemaining(),
+                                 Notification.NICON_DARK_THEME, Notification.BAT_DOWN,true);
                          val=1;
                      }
                 }
@@ -92,7 +92,7 @@ public class Init {
                      if(val==0){
                         Notification.show("Battery status","The Battery is full charged, please disconect\n"
                                +"Battery Level is: "+ bat_Level +"%",Notification.NICON_DARK_THEME,
-                               Notification.BAT_FULL);
+                               Notification.BAT_FULL,true);
                         val = 1;
                      }
                 }
