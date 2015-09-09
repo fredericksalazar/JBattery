@@ -29,10 +29,16 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import nicon.notify.core.Notification;
 
+
 /**
- *
+ * Jacpi es la interfaz de comunicación entre JBattery y la batería del disposi
+ * tivo, hace uso de la app acpi que permite acceder a la información de carga
+ * de la batería, Jacpi ofrece los métodos básicos para obtener la información.
+ * 
  * @author frederick
  */
+
+
 public class Jacpi {
 
     private String OS;
@@ -51,10 +57,11 @@ public class Jacpi {
     private int capBat;
     private ArrayList <String> chkLines;
 
+    
     /**
     * Inicializa la interface de comunicacion entre la JVM y el kernel Linux
     * usando ACPI para obtener los datos de la bateria del dispositivo, estados
-    * datos serán obtenidos, interpretados y devueltos por JACPI.
+    * datos serán obtenidos, interpretados y devueltos por JACPI
     * JBattery solo funcionará sobre OS Linux que tengan instalado el paquete
     * ACPI, para ello al inicializar JACPI este se encargará de validar estados
     * 2 requerimientos, en caso de no cumplirse alguno de los dos entonces la
@@ -72,6 +79,7 @@ public class Jacpi {
      * 1 que el OS Sea GNU/Linux 2) que este instalado el paquete ACPI, en caso
      * de que alguna de los 2 requerimientos no se cumplan se notifica al usuario
      */
+    
     private void verifyAcpi(){
             System.out.println("Validating requeriments ... \ngetting properties ...");
             OS = System.getProperty("os.name");
