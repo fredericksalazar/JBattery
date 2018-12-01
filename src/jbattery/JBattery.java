@@ -34,6 +34,7 @@ import jbattery.core.Jacpi;
 import nicon.notify.core.Notification;
 
 import jbattery.core.Init;
+import jbattery.core.util.JBUtil;
 
 /**
  * JBattery es una herramienta simple para sistemas GNU/Linux que permite contro
@@ -49,6 +50,8 @@ import jbattery.core.Init;
  */
 
 public class JBattery {
+
+    private static final JBUtil util = JBUtil.getInstance();
     
     /**
      * Metodo principal de entrada que recibe una lista de parámetros que deter
@@ -62,8 +65,9 @@ public class JBattery {
      */
     public static void main(String[] args) {
         
+               
         try {
-            System.out.println("Starting JBattery 1.9 ...");
+            System.out.println("Starting "+util.getNameAppVersionBuild());
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
             
             
