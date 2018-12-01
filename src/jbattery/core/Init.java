@@ -37,8 +37,8 @@ import nicon.notify.core.Notification;
 
 public class Init {
 
-    private Jacpi acpi;
-    private Timer timer;
+    private final Jacpi acpi;
+    private final Timer timer;
     private TimerTask acpiTask;
     private TimerTask valTask;
     private TimerTask memTask;
@@ -67,7 +67,7 @@ public class Init {
                 //fuente de energía.
                 if(bat_Level < 10){
                      if(val == 0){
-                         Notification.show("URGENT Battery Status","Battery is down, please conect to adapter AC"
+                         Notification.show("URGENT Battery Status","Battery is DOWN, please conect to adapter AC"
                                  + "Battery Level is"+ bat_Level +"%\ntime remaning:"+acpi.getTimeRemaining(),
                                  Notification.NICON_DARK_THEME, Notification.BAT_DOWN,true);
                          val=1;
