@@ -22,7 +22,7 @@ public class JBUtil {
         this.autor = "Frederick Salazar";
         this.nameApp = "JBattery";
         this.version = "2.2";
-        this.build = "20182230";
+        this.build = "20181130";
     }
 
     public String getVersion() {
