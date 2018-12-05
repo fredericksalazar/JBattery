@@ -34,6 +34,7 @@ import jbattery.core.Jacpi;
 import nicon.notify.core.Notification;
 
 import jbattery.core.Init;
+import jbattery.core.upower.Jupower;
 import jbattery.core.util.JBUtil;
 
 /**
@@ -65,65 +66,78 @@ public class JBattery {
      */
     public static void main(String[] args) {
         
-               
         try {
             System.out.println("Starting "+util.getNameAppVersionBuild());
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
             
-            
-            /*
-                Inicia JBattery en MONITOR_MODE que permite validar el nivel de
-                carga de la batería e informar al usuario de los diferentes niveles
-                de carga de la misma
-            */
-            
-            if(args.length==0||args[0].equals("-s")||args[0].equals("-S")){
-                Init MONITOR_MODE = new Init();
-                MONITOR_MODE.init();
-            }
-            
-            
-            /*
-                Inicia JBattery en CHEK_MODE y activa el módulo de chequeo para
-                conocer el estado vital de la bateria donde reconoce tres modos
-                bad, medium good
-            */
-            
-            if(args[0].equals("-c")||args[0].equals("-C")) {
-                try {
-                    System.out.println("\nStarting a JBattery CHEKING_MODE ...\n");
-                    Jacpi CHK_STATUS_BAT = new Jacpi();
-                    CHK_STATUS_BAT.checkBattery();
-                } catch (Exception e) {
-                    System.err.println("JBatter: Error detail: "+e);
+            if(util.verifyOperativeSystem()){
+                                
+                UIManager.setLookAndFeel(new NimbusLookAndFeel());
+
+
+                /*
+                    Inicia JBattery en MONITOR_MODE que permite validar el nivel de
+                    carga de la batería e informar al usuario de los diferentes niveles
+                    de carga de la misma
+                */
+
+                if(args.length==0||args[0].equals("-s")||args[0].equals("-S")){
+                    Init MONITOR_MODE = new Init();
+                    MONITOR_MODE.init();
+                }else{
+                   /*
+                        Inicia JBattery en CHEK_MODE y activa el módulo de chequeo para
+                        conocer el estado vital de la bateria donde reconoce tres modos
+                        bad, medium good
+                    */
+
+                    if(args[0].equals("-c")||args[0].equals("-C")) {
+                        try {
+                            System.out.println("\nStarting a JBattery CHEKING_MODE ...\n");
+                            Jupower CHK_STATUS_BAT = new Jupower();
+                            CHK_STATUS_BAT.check_battery_health();
+                        } catch (Exception e) {
+                            System.err.println("JBatter: Error detail: "+e);
+                        }
+                    }
+
+                    //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
+                    if(args[0].equals("-v")||args[0].equals("-V")){
+                        Notification.show(util.getNameApp(), 
+                                          "JBattery version : "+util.getVersion()+"\n"
+                                        + "NiconNotifyOSD version: 1.9.8\n"
+                                        + "Developed by: "+util.getAutor(),
+                                           Notification.NICON_DARK_THEME, 
+                                           Notification.NICON_SYSTEM);
+                    }
+
+                    //Muestra por consola un manual de ayuda de JBattery
+                    if(args[0].equals("-h")){
+                        System.out.println("\n\n////////////////////////////////////////////////////////////////////////////////////\n\n" +
+                                "Welcome to JBattery Manual\n\n" +
+                                "JBattery is a java app for GNU/Linux that allows monitoring the different \n" +
+                                "events battery of a device, report the different energy levels and evaluates\n" +
+                                "the state of health of the battery of your device.\n" +
+                                "\n" +
+                                "Below is the list of parameters to use: \n\n" +
+                                "-s or -S - - - - - - - - - - start a JBattery app (UI)\n" +
+                                "-c or -C - - - - - - - - - - start CHEKING_MODE for evaluate the battery life\n"+
+                                "-v or -V - - - - - - - - - - show the version app in a desktop notification\n" +
+                                "-h or -H - - - - - - - - - - show a help information of JBattery\n\n"
+                                + "JBattery is developed by: NiconSystemCO\n"
+                                + "JBattery mainteined by: Frederick Salazar Sanchez <fredefass01@gmail.com>"
+                                + "\n\n////////////////////////////////////////////////////////////////////////////////////\n\n");
+                    } 
                 }
+            }else{
+                int inp = Notification.showConfirm("JBattery ERROR", "JBattery is developed only for GNU/Linux OS,"
+                                                 + " please verify and execute, JBattery exit now.", 
+                                                   Notification.NICON_DARK_THEME,
+                                                   Notification.ERROR_MESSAGE,60);
+                if(inp > 0) 
+                    System.exit(0);
             }
             
-            //Muestra una notificacion con la version de JBattery y NiconNotifyOSD
-            if(args[0].equals("-v")||args[0].equals("-V")){
-                Notification.show("JBattery", "JBattery version: 2.0\n"
-                        + "NiconNotifyOSD version: 1.9.8\n"
-                        + "Developed by: NiconSystemCO 2015",
-                        Notification.NICON_DARK_THEME, Notification.NICON_SYSTEM);
-            }
             
-            //Muestra por consola un manual de ayuda de JBattery
-            if(args[0].equals("-h")){
-                System.out.println("\n\n////////////////////////////////////////////////////////////////////////////////////\n\n" +
-                        "Welcome to JBattery Manual\n\n" +
-                        "JBattery is a java app for GNU/Linux that allows monitoring the different \n" +
-                        "events battery of a device, report the different energy levels and evaluates\n" +
-                        "the state of health of the battery of your device.\n" +
-                        "\n" +
-                        "Below is the list of parameters to use: \n\n" +
-                        "-s -S - - - - - - - - - - start a JBattery app (UI)\n" +
-                        "-c -C - - - - - - - - - - start CHEKING_MODE for evaluate the battery life\n"+
-                        "-v -V - - - - - - - - - - show the version app in a desktop notification\n" +
-                        "-h -H - - - - - - - - - - show a help information of JBattery\n\n"
-                        + "JBattery is developed by: NiconSystemCO\n"
-                        + "JBattery mainteined by: Frederick Salazar Sanchez <fredefass01@gmail.com>"
-                        + "\n\n////////////////////////////////////////////////////////////////////////////////////\n\n");
-            }
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(JBattery.class.getName()).log(Level.SEVERE, null, ex);
         }
