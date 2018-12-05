@@ -39,7 +39,7 @@ import nicon.notify.core.Notification;
  * @email  fredefass01@gmail.com
  */
 
-
+@Deprecated
 public class Jacpi {
 
     private String OS;
@@ -68,7 +68,7 @@ public class Jacpi {
     * 2 requerimientos, en caso de no cumplirse alguno de los dos entonces la
     * app será cerrada.
     */
-
+    @Deprecated
     public Jacpi(){
         System.out.println("initializing JACPI ...");
         verifyAcpi();
@@ -80,7 +80,7 @@ public class Jacpi {
      * 1 que el OS Sea GNU/Linux 2) que este instalado el paquete ACPI, en caso
      * de que alguna de los 2 requerimientos no se cumplan se notifica al usuario
      */
-    
+    @Deprecated
     private void verifyAcpi(){
             System.out.println("Validating requeriments ... \ngetting properties ...");
             OS = System.getProperty("os.name");
@@ -108,6 +108,7 @@ public class Jacpi {
      * 
      * @return 
      */
+    @Deprecated
     public boolean isACPI(){
         boolean acpi = false;
             try{
@@ -125,6 +126,7 @@ public class Jacpi {
      * Obtiene los datos de la batería recibidos de ACPI
      * @return String bateryData
      */
+    @Deprecated
     private String[] getStatusACPI(){
         try{
             proc = Runtime.getRuntime().exec("acpi");
@@ -145,6 +147,7 @@ public class Jacpi {
      *
      * @return String nivel
      */
+    @Deprecated
     public int getPercentBattery(){
         acData = getStatusACPI();
         nivel = acData[1];
@@ -157,6 +160,7 @@ public class Jacpi {
      * Retorna el tiempo restante para descarga la bateria.
      * @return nivel
      */
+    @Deprecated
     public String getTimeRemaining(){
         if(acData != null){
             tmRem = acData[2].replace("%", "");
@@ -170,6 +174,7 @@ public class Jacpi {
      * en caso que full capacity sea menor a last full charged entonces la
      * bateria esta muriendo.
      */
+    @Deprecated
     public void checkBattery(){
         try{
             chkLines = new ArrayList();
