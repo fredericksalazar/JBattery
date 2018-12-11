@@ -6,7 +6,6 @@ Hi, this is JBattery, a JavaSE app that I created some time ago because my lapto
 In order to use JBattery you only need two things, soon it will only be one
 
  - Java >= 8
- - ACPI to install in debian based distributions **(sudo apt-get install acpi)**
 
 ## HOW TO
 To run JBattery I do the following:
