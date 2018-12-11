@@ -27,8 +27,8 @@ public class JBUtil {
     private JBUtil(){
         this.autor = "Frederick Salazar";
         this.nameApp = "JBattery";
-        this.version = "2.8";
-        this.build = "20181204";
+        this.version = "2.9";
+        this.build = "20181210";
     }
 
     public String getVersion() {
