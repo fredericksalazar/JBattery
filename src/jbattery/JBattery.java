@@ -30,7 +30,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import jbattery.core.Jacpi;
 import nicon.notify.core.Notification;
 
 import jbattery.core.Init;
@@ -68,6 +67,7 @@ public class JBattery {
         
         try {
             System.out.println("Starting "+util.getNameAppVersionBuild());
+            util.validateJavaVersion();
             
             if(util.verifyOperativeSystem()){
                                 
