@@ -46,7 +46,6 @@ public class Init {
     private TimerTask valTask;
     private TimerTask memTask;
     
-    private int val;
     private int bat_Level;
     Runtime run;
 
@@ -54,7 +53,6 @@ public class Init {
         System.out.println("initializing init ...\n");
         JUpower = new Jupower();
         timer = new Timer();
-        validator();
         clearMemory();
     }
     
@@ -126,19 +124,7 @@ public class Init {
         }
     }
 
-    /**
-    Este metodo se encarga de validar la ejecucion de JACPI.
-    */
-    private void validator(){
-        valTask = new TimerTask(){
-            @Override
-            public void run() {
-                val = 0;
-            }
-        };
-        timer.schedule(valTask, 1,600000);
-    }
-
+    
     /**
      * Este metodo se encarga de hacer una dump de memoria haciendo una invocacion al garbage collector de la JVM
      * es llamado cada 15 minutos. (Se espera aumentar mas el tiempo para hacer la llamada)
