@@ -80,6 +80,21 @@ public class JBUtil {
     }
     
     /**
+     * Return the Java version
+     * @return 
+     */
+    public boolean validateJavaVersion(){
+        try{
+           String jvm = System.getProperty("java.version");
+           System.out.println("Java version is : "+jvm);
+        }catch(Exception e){
+            System.err.println("ERROR Has ocurred in JBUtil.validateJavaVersion()");
+        }  
+        
+        return true;
+    }
+    
+    /**
      * This Method verify the operative system of execution, in this moment
      * only supported Linux OS
      * @return 
