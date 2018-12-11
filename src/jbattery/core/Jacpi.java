@@ -35,10 +35,11 @@ import nicon.notify.core.Notification;
  * tivo, hace uso de la app acpi que permite acceder a la información de carga
  * de la batería, Jacpi ofrece los métodos básicos para obtener la información.
  * 
- * @author frederick
+ * @author Frederick Salazar Sanchez
+ * @email  fredefass01@gmail.com
  */
 
-
+@Deprecated
 public class Jacpi {
 
     private String OS;
@@ -67,7 +68,7 @@ public class Jacpi {
     * 2 requerimientos, en caso de no cumplirse alguno de los dos entonces la
     * app será cerrada.
     */
-
+    @Deprecated
     public Jacpi(){
         System.out.println("initializing JACPI ...");
         verifyAcpi();
@@ -79,34 +80,53 @@ public class Jacpi {
      * 1 que el OS Sea GNU/Linux 2) que este instalado el paquete ACPI, en caso
      * de que alguna de los 2 requerimientos no se cumplan se notifica al usuario
      */
-    
+    @Deprecated
     private void verifyAcpi(){
             System.out.println("Validating requeriments ... \ngetting properties ...");
             OS = System.getProperty("os.name");
             System.out.println("\nOperative System : "+OS);
                 if(OS.equals("Linux")){
-                    try{
-                      proc = Runtime.getRuntime().exec("acpi");
-                      proc.destroy();
-                    }catch(IOException er){
-                        int inp = Notification.showConfirm("JBattery ERROR",er.getMessage(),
-                                Notification.NICON_DARK_THEME,true,Notification.ERROR_MESSAGE);
-                        if(inp >= 0)
-                            System.exit(0);
+                    if(!isACPI()){
+                        int inp = Notification.showConfirm("JBattery ERROR", 
+                                                           "ACPI is not installed in this Linux, this is required please install",
+                                                           Notification.NICON_DARK_THEME,
+                                                           false,
+                                                           Notification.ERROR_MESSAGE,
+                                                           100);
                     }
                 }else{
                     int inp = Notification.showConfirm("JBattery ERROR", "JBattery is developed only for GNU/Linux OS,"
                         + " please verify and execute, JBattery exit now.", Notification.NICON_DARK_THEME,
                         Notification.ERROR_MESSAGE, true);
-                    if( inp >= 0)
-                        System.exit(0);
+                        if(inp > 0) System.exit(0);
                 }
     }
+    
+    /**
+     * Este metodo permite validar si ACPI esta instalado dentro del sistema
+     * Linux si esta instalado retorna true en caso contrario retorna false
+     * 
+     * @return 
+     */
+    @Deprecated
+    public boolean isACPI(){
+        boolean acpi = false;
+            try{
+                proc = Runtime.getRuntime().exec("acpi");
+                proc.destroy();
+                acpi = true;
+            }catch(IOException er){
+                 acpi = false;              
+            }
+        return acpi;
+    }
+   
 
     /**
      * Obtiene los datos de la batería recibidos de ACPI
      * @return String bateryData
      */
+    @Deprecated
     private String[] getStatusACPI(){
         try{
             proc = Runtime.getRuntime().exec("acpi");
@@ -127,6 +147,7 @@ public class Jacpi {
      *
      * @return String nivel
      */
+    @Deprecated
     public int getPercentBattery(){
         acData = getStatusACPI();
         nivel = acData[1];
@@ -139,6 +160,7 @@ public class Jacpi {
      * Retorna el tiempo restante para descarga la bateria.
      * @return nivel
      */
+    @Deprecated
     public String getTimeRemaining(){
         if(acData != null){
             tmRem = acData[2].replace("%", "");
@@ -152,6 +174,7 @@ public class Jacpi {
      * en caso que full capacity sea menor a last full charged entonces la
      * bateria esta muriendo.
      */
+    @Deprecated
     public void checkBattery(){
         try{
             chkLines = new ArrayList();

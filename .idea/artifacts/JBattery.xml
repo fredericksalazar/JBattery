@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="JBattery">
-    <output-path>$PROJECT_DIR$/out/artifacts/JBattery</output-path>
-    <root id="archive" name="JBattery.jar" />
-  </artifact>
-</component>
